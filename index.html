@@ -194,7 +194,7 @@
     </style>
 </head>
 <body>
-    <!-- Header - Logo text REMOVED -->
+    <!-- Header -->
     <header class="header">
         <div class="logo-circle" onclick="copyUrl()">ζ͜͡𝕲𝖍𝖔𝖘𝖙</div>
         <button class="dark-toggle" onclick="toggleDarkMode()">🌕</button>
@@ -223,14 +223,43 @@
         Powered by DuckDuckGo
     </div>
 
-    <!-- SAME TAB SEARCH -->
+    <!-- TRUE UNBLOCKER - Multiple engines + proxies -->
     <script>
+        const searchUrls = [
+            // Search engines (different domains bypass DNS blocks)
+            query => `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+            query => `https://www.startpage.com/do/search?q=${encodeURIComponent(query)}`,
+            query => `https://search.brave.com/search?q=${encodeURIComponent(query)}`,
+            query => `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
+            // Proxy services that serve full HTML pages
+            query => `https://www.proxysite.com/?url=${encodeURIComponent('https://duckduckgo.com/?q=' + encodeURIComponent(query))}`,
+            query => `https://www.croxyproxy.com/?url=${encodeURIComponent('https://duckduckgo.com/?q=' + encodeURIComponent(query))}`,
+            query => `https://hide.me/en/proxy?url=${encodeURIComponent('https://duckduckgo.com/?q=' + encodeURIComponent(query))}`
+        ];
+        
         function performSearch() {
             const query = document.getElementById('searchInput').value.trim();
             if (!query) return;
             
-            // SAME TAB - Direct DuckDuckGo
-            window.location.replace(`https://duckduckgo.com/?q=${encodeURIComponent(query)}`);
+            // Try each service until one works (SAME TAB)
+            let currentIndex = 0;
+            const tryNext = () => {
+                if (currentIndex >= searchUrls.length) {
+                    alert('All services blocked. Try different keywords.');
+                    return;
+                }
+                
+                const url = searchUrls[currentIndex](query);
+                window.location.replace(url);
+                currentIndex++;
+            };
+            
+            tryNext();
+            
+            // Visual feedback
+            const input = document.getElementById('searchInput');
+            input.style.transform = 'scale(0.97)';
+            input.placeholder = 'Loading unblocker...';
         }
         
         function handleSearch(event) {
@@ -250,7 +279,7 @@
             document.querySelector('.dark-toggle').textContent = '🌑';
         }
         
-        // COPY URL (click logo circle)
+        // COPY URL
         function copyUrl() {
             navigator.clipboard.writeText(window.location.href).then(() => {
                 const circle = document.querySelector('.logo-circle');
