@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Glint</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/reviews.css">
+</head>
+<body>
+  <div class="browser">
+    <div class="browser-header">
+      <div class="tabs">
+        <div class="tab active">
+          <img src="images/logo.png" class="tab-logo">
+          <span>New Tab</span>
+          <span class="tab-close">×</span>
+        </div>
+        <div class="new-tab-btn">+</div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button>←</button><button>→</button><button>⟳</button>
+      <input class="address-bar-input" placeholder="Search or enter a URL">
+      <button>⋮</button>
+    </div>
+    <div class="browser-content">
+      <div class="new-tab-page">
+        <img src="images/logo.png" class="main-logo">
+        <input class="main-search-input" placeholder="Search or enter a site URL">
+        <p>Glint proxy</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- All your JS files -->
+  <script src="js/main.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/proxy-config.js"></script>
+  <script src="js/navigation.js"></script>
+</body>
+</html>
